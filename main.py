@@ -3,11 +3,12 @@ import My_clients
 import My_discounts
 import My_menu
 import My_exeptions
+import My_logger
 
 
 if __name__ == '__main__':
     try:
-        dish_1 = My_menu.Dish('Fish', 'Fried fish', 15)
+        dish_1 = My_menu.Dish(1, 'Fried fish', 15)
         dish_2 = My_menu.Dish('Steak', 'Beef steal', 20)
         dish_3 = My_menu.Dish('Tom yam', 'Asian spicy soup', 17)
         dish_4 = My_menu.Dish('Borch', 'Ukrainian national soup', 25)
@@ -30,7 +31,7 @@ if __name__ == '__main__':
 
         test_client = My_clients.Client('Vova', test_order, My_discounts.gold_discount)
     except (TypeError, ValueError, My_exeptions.PriceError) as e:
-        print('Error: ' + str(e))
+        My_logger.logger.error(f'Problem. {e}')
 
     else:
         print(test_client.order)

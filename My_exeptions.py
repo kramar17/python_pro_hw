@@ -1,8 +1,8 @@
 class PriceError(Exception):
 
-    def __init__(self, messege: str) -> None:
-        self.messege = messege
-        super().__init__(messege)
+    def __init__(self, message: str) -> None:
+        self.message = message
+        super().__init__(message)
 
     def __str__(self) -> str:
-        return f'Price must be above zero {self.messege}'
+        return f'Price must be above zero {self.message}'

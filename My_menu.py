@@ -1,4 +1,5 @@
 import My_exeptions
+import My_logger
 
 
 class Dish:
@@ -15,6 +16,7 @@ class Dish:
         self.name = name
         self.description = description
         self.price = price
+        My_logger.logger.info(f'New dish was created. Name: {self.name}')
 
     def __str__(self):
         return f"{self.name} is a {self.description} cost {self.price} dollars"
@@ -30,6 +32,7 @@ class MenuCategory:
                 raise ValueError(" Only dishes can be added in menu category")
         self.name = name
         self.dishes = list(dishes)
+        My_logger.logger.info(f'New menu category was created. Name: {self.name}')
 
     def add_dish(self, dish: Dish):
         if dish not in self.dishes:
