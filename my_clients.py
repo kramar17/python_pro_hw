@@ -1,15 +1,15 @@
-import My_discounts
-import My_orders
+import my_discounts
+import my_orders
 
 
 class Client:
 
-    def __init__(self, name: str, order: My_orders.Order, discount: My_discounts.Discount):
+    def __init__(self, name: str, order: my_orders.Order, discount: my_discounts.Discount):
         if not isinstance(name, str):
             raise TypeError('Name of client must be string')
-        if not isinstance(order, My_orders.Order):
+        if not isinstance(order, my_orders.Order):
             raise TypeError('Wrong order data')
-        if discount not in My_discounts.discounts:
+        if discount not in my_discounts.discounts:
             raise TypeError('Wrong discount data')
         self.name = name
         self.order = order
