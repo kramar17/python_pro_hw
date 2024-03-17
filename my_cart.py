@@ -35,6 +35,16 @@ class ProductCart:
             total_price += product.price * quantity
         return total_price
 
+    def __add__(self, other):
+        if not isinstance(other, ProductCart):
+            raise ValueError(' You can only add cart to cart')
+        for product, quantity in other.product_list.items():
+            if product in self.product_list:
+                self.product_list[product] += quantity
+            else:
+                self.product_list[product] = quantity
+        return self
+
 
     def __str__(self):
         product_quantities = [f"{product.name}: {quantity}" for product, quantity in self.product_list.items()]
