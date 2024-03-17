@@ -24,7 +24,7 @@ class ProductCart:
             raise my_exeptions.QuantityError
         if product not in self.product_list.keys():
             raise my_exeptions.RemoveError('try another product')
-        if quantity is None:
+        if quantity is None or self.product_list[product] == 0:
             del self.product_list[product]
         else:
             self.product_list[product] -= quantity
@@ -38,12 +38,15 @@ class ProductCart:
     def __add__(self, other):
         if not isinstance(other, ProductCart):
             raise ValueError(' You can only add cart to cart')
-        for product, quantity in other.product_list.items():
-            if product in self.product_list:
-                self.product_list[product] += quantity
+
+        result_cart = ProductCart(f'{self.name}_+_{other.name}')
+        result_cart.product_list = self.product_list.copy()
+        for product, value in other.product_list.items():
+            if product in result_cart.product_list.keys():
+                result_cart.product_list[product] += value
             else:
-                self.product_list[product] = quantity
-        return self
+                result_cart.product_list[product] = value
+        return result_cart
 
 
     def __str__(self):
