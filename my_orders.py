@@ -31,6 +31,20 @@ class Order:
         else:
             self.dishes_list[dish] -= quantity
 
+    def __add__(self, other):
+        if other in self.dishes_list:
+            self.dishes_list[other] += 1
+        else:
+            self.dishes_list[other] = 1
+
+    def __radd__(self, other):
+        if not isinstance(other, my_menu.Dish):
+            return NotImplemented
+        if other in self.dishes_list:
+            self.dishes_list[other] += 1
+        else:
+            self.dishes_list[other] = 1
+
     def __str__(self):
         return ''.join(
             map(lambda x: x[0].name + " x " + str(x[1]) + ' cost ' + str(x[0].price) + '\n', self.dishes_list.items()))
