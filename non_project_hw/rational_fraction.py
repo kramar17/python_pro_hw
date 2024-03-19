@@ -5,11 +5,19 @@ class RationalFraction:
 
     def __init__(self, up: int, down: int):
         if down == 0:
-            raise ValueError("you cant have zero in down part of the fraction")
+            raise ZeroDivisionError("Denominator must not be a zero")
+        if not isinstance(up, int):
+            raise TypeError("Numerator must be a integer number")
+        if not isinstance(down, int):
+            raise TypeError("Denominator must be a integer number")
+        if down < 0:
+            raise ValueError("Denominator must be positive")
         self.up = up
         self.down = down
 
     def __str__(self):
+        if self.up == self.down:
+            return "1"
         return f'{self.up}/{self.down}'
 
     def __add__(self, other):
@@ -51,8 +59,8 @@ class RationalFraction:
         return (self.up * other.down) != (other.up * self.down)
 
 
-test1 = RationalFraction(2, 4)
-test2 = RationalFraction(1, 6)
+test1 = RationalFraction(-9, 4)
+test2 = RationalFraction(2, 4)
 
-print(test1 > test2)
+print(test1 + test2)
 
