@@ -18,6 +18,8 @@ class RationalFraction:
     def __str__(self):
         if self.up == self.down:
             return "1"
+        if self.up == 0:
+            return "0"
         return f'{self.up}/{self.down}'
 
     def __add__(self, other):

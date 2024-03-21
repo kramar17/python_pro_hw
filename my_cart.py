@@ -24,10 +24,15 @@ class ProductCart:
             raise my_exeptions.QuantityError
         if product not in self.product_list.keys():
             raise my_exeptions.RemoveError('try another product')
-        if quantity is None or self.product_list[product] == 0:
+        if quantity is None:
             del self.product_list[product]
         else:
             self.product_list[product] -= quantity
+
+        if quantity:
+            self.product_list[product] -= quantity
+        else:
+            del self.product_list[product]
 
     def count_prise(self):
         total_price = 0
