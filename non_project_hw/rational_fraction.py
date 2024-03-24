@@ -4,12 +4,12 @@ import math
 class RationalFraction:
 
     def __init__(self, up: int, down: int):
-        if down == 0:
-            raise ZeroDivisionError("Denominator must not be a zero")
         if not isinstance(up, int):
             raise TypeError("Numerator must be a integer number")
         if not isinstance(down, int):
             raise TypeError("Denominator must be a integer number")
+        if down == 0:
+            raise ZeroDivisionError("Denominator must not be a zero")
         if down < 0:
             raise ValueError("Denominator must be positive")
         self.up = up
@@ -20,27 +20,25 @@ class RationalFraction:
             return "1"
         if self.up == 0:
             return "0"
-        return f'{self.up}/{self.down}'
+        temp = math.gcd(self.up, self.down)
+        return f'{int(self.up/temp)}/{int(self.down/temp)}'
 
     def __add__(self, other):
         new_down = self.down * other.down
         new_up = (self.up * other.down) + (other.up * self.down)
-        temp = math.gcd(new_up, new_down)
-        return RationalFraction(int(new_up/temp), int(new_down/temp))
+        return RationalFraction(new_up, new_down)
 
     def __sub__(self, other):
         new_down = self.down * other.down
         new_up = (self.up * other.down) - (other.up * self.down)
-        temp = math.gcd(new_up, new_down)
         if new_up == 0:
             return 0
-        return RationalFraction(int(new_up / temp), int(new_down / temp))
+        return RationalFraction(new_up, new_down)
 
     def __mul__(self, other):
         new_down = self.down * other.down
         new_up = self.up * other.up
-        temp = math.gcd(new_up, new_down)
-        return RationalFraction(int(new_up / temp), int(new_down / temp))
+        return RationalFraction(new_up, new_down)
 
     def __lt__(self, other):
         return (self.up * other.down) < (other.up * self.down)
