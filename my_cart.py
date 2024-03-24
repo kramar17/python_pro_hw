@@ -34,11 +34,8 @@ class ProductCart:
         else:
             del self.product_list[product]
 
-    def count_prise(self):
-        total_price = 0
-        for product, quantity in self.product_list.items():
-            total_price += product.price * quantity
-        return total_price
+    def count_price(self):
+        return sum(product.price * quantity for product, quantity in self.product_list.items())
 
     def __add__(self, other):
         if not isinstance(other, ProductCart):
