@@ -56,12 +56,25 @@ class ProductCart:
         product_quantities = [f"{product.name}: {quantity}" for product, quantity in self.product_list.items()]
         return f"Cart name: {self.name}\n" + "\n".join(product_quantities)
 
+    def __getitem_slice(self, index):
+        start = index.start or 0
+        stop = index.stop or len(self.iter_list) + 1
+        step = index.step or 1
+        result = ProductCart(f'{self.name} slice [{start}:{stop}:{step}]')
+        for i in self.iter_list[start:stop:step]:
+            result.add_product(i, self.product_list[i])
+        return result
+
     def __getitem__(self, item):
-        if not isinstance(item,int):
-            raise ValueError("Index must be a integer number")
-        if item > len(self.iter_list)-1:
-            raise IndexError("Out of range")
-        return str(self.iter_list[item]), self.product_list[self.iter_list[item]]
+        if not isinstance(item, int | slice):
+            raise ValueError("Index must be a integer number or slice")
+        if isinstance(item, int):
+            if item > len(self.iter_list)-1:
+                raise IndexError("Out of range")
+            return str(self.iter_list[item]), self.product_list[self.iter_list[item]]
+        if isinstance(item, slice):
+            return self.__getitem_slice(item)
+
 
 try:
     product_1 = my_product.Product('fish', 'salmon file', 10)
@@ -77,3 +90,5 @@ try:
     print(cart_1.count_price())
 except (TypeError, ValueError, my_exeptions.PriceError, my_exeptions.RemoveError, my_exeptions.QuantityError) as e:
     print(e)
+
+print(cart_1[1:3])
