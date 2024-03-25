@@ -6,6 +6,6 @@ class Product:
         self.price = price
 
     def __str__(self):
-        return f'{self.name}\n{self.description} \nprice: {self.price} UAH'
+        return f'{self.name}, {self.description}, price: {self.price} UAH'
 
 
