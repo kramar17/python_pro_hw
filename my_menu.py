@@ -45,6 +45,18 @@ class MenuCategory:
     def __str__(self):
         return f'{self.name}:\n {", ".join(str(dish.name) for dish in self.dishes)}\n'
 
+    def __len__(self):
+        return MenuIterator.get_len(self.dishes)
+
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            return MenuIterator.get_item(self.dishes, index)
+        if isinstance(index, slice):
+            return MenuIterator.getitem_slice(self.dishes, index, 'dish')
+
+    def __iter__(self):
+        return MenuIterator(self.dishes)
+
 
 class Menu:
 
@@ -57,3 +69,62 @@ class Menu:
 
     def __str__(self):
         return ''.join(map((lambda x: str(x) + '\n'), self.category_list))
+    
+    def __len__(self):
+        return MenuIterator.get_len(self.category_list)
+
+    def __getitem__(self, index):
+        if isinstance(index, int):
+            return MenuIterator.get_item(self.category_list, index)
+        if isinstance(index, slice):
+            return MenuIterator.getitem_slice(self.category_list, index, 'category')
+
+    def __iter__(self):
+        return MenuIterator(self.category_list)
+        
+
+class MenuIterator:
+
+    def __init__(self, some_list):
+        self.items = some_list
+        self.index = 0
+
+    def __next__(self):
+        if self.index < len(self.items):
+            result = self.items[self.index]
+            self.index += 1
+            return result
+        else:
+            raise StopIteration
+
+    def __iter__(self):
+        self.index = 0
+        return self
+
+    @staticmethod
+    def get_len(some_list):
+        return len(some_list)
+
+    @staticmethod
+    def get_item(some_list, index):
+        return some_list[index]
+
+    @staticmethod
+    def getitem_slice(some_list, index, item):
+        start = index.start or 0
+        stop = index.stop or len(some_list)
+        step = index.step or 1
+
+        if item == 'dish':
+            result = MenuCategory(f'slice [{start}:{stop}:{step}]')
+            for i in range(start, stop, step):
+                result.add_dish(some_list[i])
+            return result
+
+        if item == 'category':
+            result = Menu(f'slice [{start}:{stop}:{step}]')
+            for i in range(start, stop, step):
+                result.add_category(some_list[i])
+            return result
+
+

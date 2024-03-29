@@ -8,7 +8,7 @@ import my_logger
 
 if __name__ == '__main__':
     try:
-        dish_1 = my_menu.Dish('1', 'Fried fish', 15)
+        dish_1 = my_menu.Dish('Fish', 'Fried fish', 15)
         dish_2 = my_menu.Dish('Steak', 'Beef steal', 20)
         dish_3 = my_menu.Dish('Tom yam', 'Asian spicy soup', 17)
         dish_4 = my_menu.Dish('Borch', 'Ukrainian national soup', 25)
@@ -36,3 +36,5 @@ if __name__ == '__main__':
     else:
         print(test_client.order)
         print(test_client.count_order())
+
+print(main_dishes[::])
